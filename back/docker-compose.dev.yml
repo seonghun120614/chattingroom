@@ -1,6 +1,10 @@
+# Want to load only back-server
 services:
   back:
-    image: chatting-back:1.0
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: chatting-spring:1.0
     ports:
       - 8080:8080
     env_file:

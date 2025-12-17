@@ -19,7 +19,8 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) {
 		return http
 				.authorizeHttpRequests(auth -> auth
-						.anyRequest().permitAll()
+						.requestMatchers("/api/chatroom").permitAll()
+						.anyRequest().authenticated()
 				)
 				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 				.httpBasic(AbstractHttpConfigurer::disable)
