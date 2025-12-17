@@ -1,0 +1,24 @@
+services:
+  back:
+    image: chatting-back:1.0
+    ports:
+      - 8080:8080
+    env_file:
+      - .env.dev
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DATABASE=testdb
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=1234
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+      start_period: 5s

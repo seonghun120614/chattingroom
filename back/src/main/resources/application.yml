@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: back
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+  profiles:
+    active: dev
