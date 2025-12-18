@@ -32,7 +32,11 @@ jobs:
 
       - name: Build and Push Backend
         run: |
+<<<<<<< HEAD
           docker build build \
+=======
+          docker build \
+>>>>>>> 1d6805d (chore: 3일차 CI/CD 1차 배포)
             -f ./back/Dockerfile.dev \
             -t ${{ secrets.DOCKER_USERNAME }}/chatting-spring:latest \
             --push \
@@ -40,7 +44,11 @@ jobs:
 
       - name: Build and Push Frontend
         run: |
+<<<<<<< HEAD
           docker build build \
+=======
+          docker build \
+>>>>>>> 1d6805d (chore: 3일차 CI/CD 1차 배포)
             -f ./front/Dockerfile.dev \
             -t ${{ secrets.DOCKER_USERNAME }}/chatting-next:latest \
             --push \
