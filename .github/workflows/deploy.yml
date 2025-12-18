@@ -17,7 +17,6 @@ jobs:
           MYSQL_USER=${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
           MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
-          NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
           SPRING_DATASOURCE_USER=${{ secrets.MYSQL_USER }}
           SPRING_DATASOURCE_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
           SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
