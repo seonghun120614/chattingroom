@@ -25,6 +25,7 @@ public class ChatRoom {
 	@Column(length = 100, nullable = false)
 	private String roomName;
 
+	@Getter
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 
