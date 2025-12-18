@@ -1,5 +1,6 @@
 package com.example.back;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +16,10 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+	@Value("${cors.allowed-origin}")
+	private String allowedOrigin;
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) {
 		return http
@@ -31,7 +36,7 @@ public class SecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000"));
+		corsConfiguration.setAllowedOrigins(List.of(allowedOrigin));
 		corsConfiguration.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));
 		corsConfiguration.addAllowedHeader("*");
 

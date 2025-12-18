@@ -4,3 +4,6 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME:test}
     password: ${SPRING_DATASOURCE_PASSWORD:1234}
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+cors:
+  allowed-origin: ${CORS_ALLOWED_ORIGIN:http://localhost:3000}

@@ -21,7 +21,7 @@ public class ChatRoomController {
 	@GetMapping(
 			produces = { "application/json" }
 	)
-	public ResponseEntity<List<ChatRoom>> guestBooks() {
+	public ResponseEntity<List<ChatRoom>> getRooms() {
 		List<ChatRoom> res = chatRoomRepository.findAll();
 		return ResponseEntity.ok(res);
 	}
@@ -30,7 +30,7 @@ public class ChatRoomController {
 			consumes = { "text/plain" },
 			produces = { "application/json" }
 	)
-	public ResponseEntity<ChatRoom> guestBook(
+	public ResponseEntity<ChatRoom> createChatRoom(
 			@RequestBody String roomName
 	) throws URISyntaxException {
 		ChatRoom res = chatRoomRepository.save(new ChatRoom(roomName));

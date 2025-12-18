@@ -1,15 +1,11 @@
 FROM gradle:9.2.1-jdk21 AS build
 WORKDIR /app
-
 COPY gradlew .
 COPY gradle/ gradle/
 COPY settings.gradle settings.gradle
 COPY build.gradle build.gradle
-
 RUN chmod +x gradlew
-
 COPY src/ src/
-
 RUN ./gradlew build -x test --no-daemon
 
 FROM eclipse-temurin:21.0.9_10-jre-ubi9-minimal

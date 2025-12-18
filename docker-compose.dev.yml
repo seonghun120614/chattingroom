@@ -7,7 +7,7 @@ services:
     ports:
       - 3000:3000
     env_file:
-      - front/.env.dev
+      - .env.dev
     depends_on:
       back:
         condition: service_started
@@ -20,7 +20,7 @@ services:
     ports:
       - 8080:8080
     env_file:
-      - back/.env.dev
+      - .env.dev
     depends_on:
       db:
         condition: service_healthy
@@ -35,3 +35,15 @@ services:
       timeout: 10s
       retries: 10
       start_period: 5s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 100M
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --performance-schema=OFF
+      - --innodb-buffer-pool-size=128M

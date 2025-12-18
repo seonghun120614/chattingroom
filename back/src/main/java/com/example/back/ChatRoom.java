@@ -22,7 +22,7 @@ public class ChatRoom {
 	private Long id;
 
 	@Getter
-	@Column(length = 100, nullable = false, unique = true)
+	@Column(length = 100, nullable = false)
 	private String roomName;
 
 	@CreationTimestamp
