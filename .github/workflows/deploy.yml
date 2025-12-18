@@ -55,6 +55,7 @@ jobs:
           script: |
             cd ${{ secrets.GCP_APP_PATH }}
             export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
+            sudo docker compose down -v
             sudo docker compose pull
             sudo -E docker compose up -d
             sudo docker system prune -f
