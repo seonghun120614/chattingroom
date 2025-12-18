@@ -1,0 +1,61 @@
+name: Deploy to GCP
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create .env file
+        run: |
+          cat > .env.prod << EOF
+          MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
+          MYSQL_USER=${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+          NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
+          SPRING_DATASOURCE_USER=${{ secrets.MYSQL_USER }}
+          SPRING_DATASOURCE_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+          SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
+          CORS_ALLOWED_ORIGIN=${{ secrets.CORS_ALLOWED_ORIGIN }}
+          EOF
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Backend
+        run: |
+          docker build build \
+            -f ./back/Dockerfile.dev \
+            -t ${{ secrets.DOCKER_USERNAME }}/chatting-spring:latest \
+            --push \
+            ./back
+
+      - name: Build and Push Frontend
+        run: |
+          docker build build \
+            -f ./front/Dockerfile.dev \
+            -t ${{ secrets.DOCKER_USERNAME }}/chatting-next:latest \
+            --push \
+            ./front
+
+      - name: Deploy to GCP VM
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GCP_HOST }}
+          username: ${{ secrets.GCP_USERNAME }}
+          key: ${{ secrets.GCP_SSH_KEY }}
+          port: 22
+          script: |
+            cd ${{ secrets.GCP_APP_PATH }}
+            export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
+            sudo docker-compose pull
+            sudo -E docker-compose up -d
+            sudo docker system prune -f
