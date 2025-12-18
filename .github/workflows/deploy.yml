@@ -33,7 +33,7 @@ jobs:
       - name: Build and Push Backend
         run: |
           docker build \
-            -f ./back/Dockerfile.dev \
+            -f .env.prod \
             -t ${{ secrets.DOCKER_USERNAME }}/chatting-spring:latest \
             --push \
             ./back
@@ -41,7 +41,7 @@ jobs:
       - name: Build and Push Frontend
         run: |
           docker build \
-            -f ./front/Dockerfile.dev \
+            -f .env.prod \
             -t ${{ secrets.DOCKER_USERNAME }}/chatting-next:latest \
             --push \
             ./front
