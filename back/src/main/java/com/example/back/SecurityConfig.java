@@ -41,8 +41,7 @@ public class SecurityConfig {
 		corsConfiguration.addAllowedHeader("*");
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", corsConfiguration);
-
+		source.registerCorsConfiguration("/api/chatroom", corsConfiguration);
 		return source;
 	}
 }
